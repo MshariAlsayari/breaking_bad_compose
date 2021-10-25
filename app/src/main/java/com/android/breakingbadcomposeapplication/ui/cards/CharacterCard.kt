@@ -10,14 +10,14 @@ import com.android.breakingbadcomposeapplication.ui.NetworkImage
 
 
 @Composable
-fun CharacterCard(url:String,name: String, nickName:String, birthDate:String) {
+fun CharacterCard(url:String?,name: String?, nickName:String?, birthDate:String?) {
    Card {
        Row {
            NetworkImage(url= url)
            Column(modifier = Modifier.weight(1f)) {
-               Text(text = name)
-               Text(text = nickName)
-               Text(text = birthDate)
+               name?.let { Text(text = it) }
+               nickName?.let { Text(text = it) }
+               birthDate?.let { Text(text = it) }
            }
 
        }

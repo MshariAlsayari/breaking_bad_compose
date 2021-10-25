@@ -10,7 +10,7 @@ import coil.transform.CircleCropTransformation
 @Composable
 fun NetworkImage(
     modifier: Modifier = Modifier,
-    url: String = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"
+    url: String?
 
 ) {
 

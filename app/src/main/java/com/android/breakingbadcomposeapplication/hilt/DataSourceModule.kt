@@ -16,7 +16,6 @@ import javax.inject.Singleton
 abstract class DataSourceModule {
 
 
-    @Singleton
     @Binds
     abstract fun provideCharactersDataSource(charactersDataSourceImpl: CharactersDataSourceImpl) : CharactersDataSource
 
