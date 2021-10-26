@@ -44,13 +44,14 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.21'
+        kotlinCompilerVersion '1.5.31'
     }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'com.android.breakingbadcomposeapplication'
 }
 
 kapt {
@@ -85,7 +86,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0'
+   // implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.2")
 
@@ -94,6 +97,8 @@ dependencies {
 
     implementation "com.google.accompanist:accompanist-pager:0.19.0" // Pager
     implementation "com.google.accompanist:accompanist-pager-indicators:0.19.0" // Pager Indicators
+
+
 
 
 }

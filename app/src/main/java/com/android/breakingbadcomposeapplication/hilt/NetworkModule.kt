@@ -3,7 +3,7 @@ package com.android.breakingbadcomposeapplication.hilt
 
 import com.android.breakingbadcomposeapplication.BuildConfig
 import com.android.breakingbadcomposeapplication.constants.NetworkConstants
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

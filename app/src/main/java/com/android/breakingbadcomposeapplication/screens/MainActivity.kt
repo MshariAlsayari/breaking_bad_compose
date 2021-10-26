@@ -4,28 +4,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.android.breakingbadcomposeapplication.Navigation
 import com.android.breakingbadcomposeapplication.R
 import com.android.breakingbadcomposeapplication.screens.chracters.CharactersScreen
-import com.android.breakingbadcomposeapplication.ui.BottomNavigationBar
-import com.android.breakingbadcomposeapplication.ui.Tabs
-import com.android.breakingbadcomposeapplication.ui.TabsContent
-import com.android.breakingbadcomposeapplication.ui.TopAppBar
+import com.android.breakingbadcomposeapplication.ui.CircularProgressBar
+import com.android.breakingbadcomposeapplication.ui.scaffold.AppScreen
 import com.android.breakingbadcomposeapplication.ui.theme.BreakingBadComposeApplicationTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.rememberPagerState
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel by viewModels<MainViewModel>()
@@ -34,9 +29,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         setContent {
             BreakingBadComposeApplicationTheme {
-                // A surface container using the 'background' color from the theme
                 MainScreen(viewModel)
             }
         }
@@ -47,34 +42,17 @@ class MainActivity : ComponentActivity() {
 
 @ExperimentalPagerApi
 @Composable
-fun MainScreen(mainViewModel: MainViewModel){
+fun MainScreen(viewModel: MainViewModel){
+    val items = viewModel.characters.value
+    val showProgress = viewModel.loading.value
+    AppScreen(appBarTitle =stringResource(id = R.string.app_name) ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            CharactersScreen(items ?:listOf())
+            CircularProgressBar(show = showProgress)
+        }
 
-
-   // val tabs = listOf(TabItem.Characters)
-    val pagerState = rememberPagerState()
-    Scaffold(
-        topBar = { TopAppBar(stringResource(id = R.string.app_name)) },
-    ) {
-//        Column {
-//            Tabs(tabs = tabs, pagerState = pagerState)
-//            TabsContent(tabs = tabs, pagerState = pagerState)
-//        }
-
-        CharactersScreen(mainViewModel.characters?: listOf())
     }
 }
-
-//@Composable
-//fun MainScreen(){
-//    val navController = rememberNavController()
-//    Scaffold(
-//        topBar = { TopAppBar(stringResource(R.string.app_name)) },
-//        bottomBar = { BottomNavigationBar(navController) }
-//    ) {
-//        Navigation(navController = navController)
-//
-//    }
-//}
 
 
 

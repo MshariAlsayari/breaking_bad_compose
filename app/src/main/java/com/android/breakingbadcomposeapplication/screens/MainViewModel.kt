@@ -1,11 +1,8 @@
 package com.android.breakingbadcomposeapplication.screens
 
 import android.util.Log
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.breakingbadcomposeapplication.base.BaseResult
 import com.android.breakingbadcomposeapplication.base.BaseViewModel
@@ -17,23 +14,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel  @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
     private val charactersRepo: CharactersRepository
-    ) : ViewModel() {
+    ) : BaseViewModel<MainViewModel.MainEvents>() {
 
 
-    var characters: List<CharacterModel>? by mutableStateOf(listOf())
+    var characters:  MutableState<List<CharacterModel>?> = mutableStateOf(listOf())
+    var loading:  MutableState<Boolean> = mutableStateOf(false)
     init {
         fetchCharacters()
     }
 
-    private fun fetchCharacters() {
+
+     fun fetchCharacters() {
         viewModelScope.launch {
-            val result = charactersRepo.getCharacters()
-            when(result){
-            is BaseResult.Success -> characters = result.data
+            loading.value = true
+            when(val result = charactersRepo.getCharacters()){
+            is BaseResult.Success -> characters.value = result.data
             is BaseResult.Failure -> Log.d("MainViewModel", "FAILURE")
             }
+            loading.value = false
         }
     }
 
