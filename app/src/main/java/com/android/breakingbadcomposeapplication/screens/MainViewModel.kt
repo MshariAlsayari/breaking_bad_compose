@@ -3,29 +3,35 @@ package com.android.breakingbadcomposeapplication.screens
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.breakingbadcomposeapplication.base.BaseResult
 import com.android.breakingbadcomposeapplication.base.BaseViewModel
 import com.android.breakingbadcomposeapplication.data.repo.CharactersRepository
-import com.msharialsayari.selfimprovement.data.model.characters.CharacterModel
+import com.android.breakingbadcomposeapplication.data.model.CharacterModel
+import com.android.breakingbadcomposeapplication.data.model.EpisodeModel
+import com.android.breakingbadcomposeapplication.data.repo.EpisodesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel  @Inject constructor(
-    private val charactersRepo: CharactersRepository
-    ) : BaseViewModel<MainViewModel.MainEvents>() {
+    private val charactersRepo: CharactersRepository,
+    private val episodesRepository: EpisodesRepository
+    ) : ViewModel() {
 
 
     var characters:  MutableState<List<CharacterModel>?> = mutableStateOf(listOf())
+    var episodes:  MutableState<List<EpisodeModel>?> = mutableStateOf(listOf())
     var loading:  MutableState<Boolean> = mutableStateOf(false)
     init {
         fetchCharacters()
+        fetchEpisodes()
     }
 
 
-     fun fetchCharacters() {
+     private fun fetchCharacters() {
         viewModelScope.launch {
             loading.value = true
             when(val result = charactersRepo.getCharacters()){
@@ -36,11 +42,19 @@ class MainViewModel  @Inject constructor(
         }
     }
 
-
-    sealed class MainEvents{
-        data class CharactersSuccess(val data: List<CharacterModel>?):MainEvents()
-        data class CharactersError(val error: String):MainEvents()
+    private fun fetchEpisodes() {
+        viewModelScope.launch {
+            loading.value = true
+            when(val result = episodesRepository.getEpisodes()){
+                is BaseResult.Success -> episodes.value = result.data
+                is BaseResult.Failure -> Log.d("MainViewModel", "FAILURE")
+            }
+            loading.value = false
+        }
     }
+
+
+
 
 
 }

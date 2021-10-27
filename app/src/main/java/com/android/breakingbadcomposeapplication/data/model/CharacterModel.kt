@@ -1,4 +1,4 @@
-package com.msharialsayari.selfimprovement.data.model.characters
+package com.android.breakingbadcomposeapplication.data.model
 
 import com.google.gson.annotations.SerializedName
 

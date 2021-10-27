@@ -2,9 +2,11 @@ package com.android.breakingbadcomposeapplication.screens
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,9 +16,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.android.breakingbadcomposeapplication.R
 import com.android.breakingbadcomposeapplication.screens.chracters.CharactersScreen
 import com.android.breakingbadcomposeapplication.ui.CircularProgressBar
+import com.android.breakingbadcomposeapplication.ui.Tabs
+import com.android.breakingbadcomposeapplication.ui.TabsContent
 import com.android.breakingbadcomposeapplication.ui.scaffold.AppScreen
 import com.android.breakingbadcomposeapplication.ui.theme.BreakingBadComposeApplicationTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.rememberPagerState
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -43,17 +48,21 @@ class MainActivity : ComponentActivity() {
 @ExperimentalPagerApi
 @Composable
 fun MainScreen(viewModel: MainViewModel){
-    val items = viewModel.characters.value
+    val characters = viewModel.characters.value ?: listOf()
+    val episodes = viewModel.episodes.value ?: listOf()
     val showProgress = viewModel.loading.value
+
+    val tabs = listOf(TabItem.Characters(items = characters, showProgress= showProgress), TabItem.Episodes(items = episodes, showProgress= showProgress))
+    val pagerState = rememberPagerState()
     AppScreen(appBarTitle =stringResource(id = R.string.app_name) ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            CharactersScreen(items ?:listOf())
-            CircularProgressBar(show = showProgress)
+        Column {
+            Tabs(tabs = tabs, pagerState = pagerState)
+            TabsContent(tabs = tabs, pagerState = pagerState)
         }
+
 
     }
 }
-
 
 
 @ExperimentalPagerApi

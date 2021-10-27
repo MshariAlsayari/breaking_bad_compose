@@ -1,6 +1,5 @@
 package com.android.breakingbadcomposeapplication.ui
 
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
@@ -8,11 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.android.breakingbadcomposeapplication.R
 import com.android.breakingbadcomposeapplication.screens.TabItem
 import com.android.breakingbadcomposeapplication.ui.theme.BreakingBadComposeApplicationTheme
 import com.google.accompanist.pager.*
@@ -29,7 +24,7 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
         // OR ScrollableTabRow()
         TabRow(
             selectedTabIndex = pagerState.currentPage,
-          //  backgroundColor= colorResource(id = R.color.purple_200 ),
+            //  backgroundColor= colorResource(id = R.color.purple_200 ),
 //            backgroundColor = colorResource(id = R.color.purple_200),
 //            contentColor = Color.Black,
             indicator = { tabPositions ->
@@ -67,12 +62,11 @@ fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
 @Composable
 fun TabsContentPreview() {
     val tabs = listOf(
-        TabItem.Characters,
+        TabItem.Characters(listOf(), showProgress = false),
     )
     val pagerState = rememberPagerState()
     TabsContent(tabs = tabs, pagerState = pagerState)
 }
-
 
 
 @ExperimentalPagerApi
@@ -80,7 +74,7 @@ fun TabsContentPreview() {
 @Composable
 fun TabsPreview() {
     val tabs = listOf(
-        TabItem.Characters,
+        TabItem.Characters(listOf(),showProgress = false),
     )
     val pagerState = rememberPagerState()
     Tabs(tabs = tabs, pagerState = pagerState)

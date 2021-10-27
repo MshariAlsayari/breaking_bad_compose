@@ -1,7 +1,7 @@
 package com.android.breakingbadcomposeapplication.data.api.characters
 
 import com.android.breakingbadcomposeapplication.base.BaseResult
-import com.msharialsayari.selfimprovement.data.model.characters.CharacterModel
+import com.android.breakingbadcomposeapplication.data.model.CharacterModel
 
 
 interface CharactersDataSource {

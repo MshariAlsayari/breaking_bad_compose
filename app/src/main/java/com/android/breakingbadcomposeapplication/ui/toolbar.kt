@@ -11,12 +11,15 @@ import com.android.breakingbadcomposeapplication.R
 import com.android.breakingbadcomposeapplication.ui.theme.BreakingBadComposeApplicationTheme
 
 @Composable
-fun TopAppBar(title:String) {
-    BreakingBadComposeApplicationTheme {
-        TopAppBar(
-            title = { Text(text = title , fontSize = 18.sp) },
-            contentColor = Color.White
-        )
+fun TopAppBar(title:String?) {
+
+    title?.let {
+        BreakingBadComposeApplicationTheme {
+            TopAppBar(
+                title = { Text(text = title, fontSize = 18.sp) },
+                contentColor = Color.White
+            )
+        }
     }
 }
 
